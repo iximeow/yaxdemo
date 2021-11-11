@@ -5,7 +5,7 @@ authors = ["iximeow <me@iximeow.net>"]
 edition = "2018"
 
 [dependencies]
-yaxpeax-arch = { version = "0.0.4" }
-yaxpeax-x86 = { version = "0.0.13" }
-yaxpeax-core = { version = "0.0.1", path = "../yaxpeax-core" }
+yaxpeax-arch = { version = "0.2.4" }
+yaxpeax-x86 = { version = "1.0.4" }
+yaxpeax-core = { version = "0.0.2", path = "../yaxpeax-core" }
 petgraph = "0.4.13"

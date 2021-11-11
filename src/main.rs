@@ -126,7 +126,7 @@ fn main() {
     };
 
     // grab some details from the binary and panic if it's not what we expected
-    let (isa, entrypoint, imports, exports, symbols) = match (&program as &dyn MemoryRepr<<AMD64 as Arch>::Address>).module_info() {
+    let (isa, entrypoint, imports, exports, symbols) = match (&program as &dyn MemoryRepr<AMD64>).module_info() {
         Some(ModuleInfo::ELF(isa, _, _, _sections, entry, _, imports, exports, symbols)) => {
             (isa, entry, imports, exports, symbols)
         }
@@ -254,7 +254,7 @@ fn two_iteration_function_analysis(program: &ModuleData, data: &mut x86_64Data, 
     let mut bfs = Bfs::new(&function_cfg.graph, function_cfg.entrypoint);
     while let Some(k) = bfs.next(&function_cfg.graph) {
         let block = function_cfg.get_block(k);
-        let mut iter = program.instructions_spanning(<AMD64 as Arch>::Decoder::default(), block.start, block.end);
+        let mut iter = AMD64::instructions_spanning(program, block.start, block.end);
         while let Some((address, instr)) = iter.next() {
             <AMD64 as ConstEvaluator<AMD64, (), ConcreteDomain>>::evaluate_instruction(&instr, address, &dfg, &(), program);
             <AMD64 as ConstEvaluator<AMD64, (), SymbolicDomain>>::evaluate_instruction(&instr, address, &dfg, &(), program);
